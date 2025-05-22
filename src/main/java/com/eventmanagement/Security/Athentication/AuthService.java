@@ -1,11 +1,8 @@
-package com.eventmanagement.Security.Authentication; // Changed from Athentification
+package com.eventmanagement.Security.Athentication; // Changed from Athentification
 
 import com.eventmanagement.Model.Role;
 import com.eventmanagement.Model.User;
 import com.eventmanagement.Repository.UserRepository;
-import com.eventmanagement.Security.Athentification.AuthRequest;
-import com.eventmanagement.Security.Athentification.AutheResponse;
-import com.eventmanagement.Security.Athentification.RegisterRequest;
 import com.eventmanagement.Security.JWT.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

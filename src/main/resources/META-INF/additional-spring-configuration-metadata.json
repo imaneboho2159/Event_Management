@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "jjwt.secret",
+      "type": "java.lang.String",
+      "description": "Description for jjwt.secret."
+  }
+] }

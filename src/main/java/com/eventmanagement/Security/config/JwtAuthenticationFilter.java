@@ -1,6 +1,5 @@
 package com.eventmanagement.Security.config;
 
-
 import com.eventmanagement.Security.JWT.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,15 +22,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
 
-         final String authHeader = request.getHeader("Authorization");
-         final String jwt;
-        if(authHeader == null || !authHeader.startsWith("Bearer")){
-        filterChain.doFilter(request,response);
-        return;
+        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+            filterChain.doFilter(request,response);
+            return;
         }
+
         jwt = authHeader.substring(7);
         String username = jwtService.extractUsername(jwt);
+
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = jwtService.loadUserByUsername(username);
             if (jwtService.isTokenValid(jwt, userDetails)) {
@@ -43,5 +44,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-    }
-
+}

@@ -1,7 +1,6 @@
-package com.eventmanagement.Security.Athentification;
+package com.eventmanagement.Security.Athentication;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

@@ -1,18 +1,21 @@
 package com.eventmanagement.Security.JWT;
 
+import com.eventmanagement.Repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
     private Key key;
 
@@ -22,11 +25,7 @@ public class JwtService {
     @Value("${jwt.expiration}")
     private Long jwtExpiration;
 
-    private final UserDetailsService userDetailsService;
-
-    public JwtService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    private final UserRepository userRepository;
 
     @PostConstruct
     public void init() {
@@ -58,6 +57,7 @@ public class JwtService {
     }
 
     public UserDetails loadUserByUsername(String username) {
-        return userDetailsService.loadUserByUsername(username);
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 }
