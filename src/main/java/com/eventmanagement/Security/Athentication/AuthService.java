@@ -22,12 +22,12 @@ public class AuthService {
 
     public AutheResponse register(RegisterRequest request) {
         User user = User.builder()
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.CLIENT)
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .role(request.role())
                 .build();
         userRepository.save(user);
-        String token = jwtService.generateToken((UserDetails) user);
+        String token = jwtService.generateToken(user);
         return new AutheResponse(token);
     }
 
@@ -35,7 +35,7 @@ public class AuthService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-        String token = jwtService.generateToken((UserDetails) user);
+        String token = jwtService.generateToken(user);
         return new AutheResponse(token);
     }
 }
