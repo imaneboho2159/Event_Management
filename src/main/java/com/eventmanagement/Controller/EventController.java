@@ -6,6 +6,7 @@ import com.eventmanagement.Service.EventService;
 import com.eventmanagement.Service.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class EventController {
     public EventController(EventService eventService) {
         this.eventService = eventService;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<EventDto> AddEvents(@RequestBody EventDto eventDto) {
         return ResponseEntity.ok(eventService.addEvent( eventDto));

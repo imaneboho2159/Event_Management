@@ -19,6 +19,7 @@ public class Reservation {
     private Long id;
 
     private LocalDate reservationDate;
+    private Long numberOfSeats;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

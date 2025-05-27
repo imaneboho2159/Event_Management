@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 public class ReservationService {
@@ -47,6 +46,7 @@ public class ReservationService {
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
         Reservation reservation = reservationMapper.fromDto(reservationDto);
+        reservation.setNumberOfSeats((long) reservationDto.numberOfSeats()); // 🔧 Explicitly set it
         reservation.setUser(user);
         reservation.setEvent(event);
         reservation.setReservationDate(LocalDate.now());
