@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 
 public record RegisterRequest (
     String email,
-     String password,
-    Role role
+     String password
 
-){}
+) {
+
+}
